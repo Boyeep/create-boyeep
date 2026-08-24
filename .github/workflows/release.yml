@@ -61,7 +61,7 @@ jobs:
             if npm view "${package_name}@${VERSION}" version --registry https://registry.npmjs.org >/dev/null 2>&1; then
               echo "Skipping ${package_name}@${VERSION}; already on npmjs."
             else
-              npm publish "$package_path" --registry https://registry.npmjs.org --access public --provenance
+              (cd "$package_path" && npm publish --registry https://registry.npmjs.org --access public --provenance)
             fi
           }
 
@@ -82,7 +82,7 @@ jobs:
             if npm view "${package_name}@${VERSION}" version --registry https://npm.pkg.github.com >/dev/null 2>&1; then
               echo "Skipping ${package_name}@${VERSION}; already on GitHub Packages."
             else
-              npm publish "$package_path" --registry https://npm.pkg.github.com --access public --provenance
+              (cd "$package_path" && npm publish --registry https://npm.pkg.github.com --access public --provenance)
             fi
           done
 
