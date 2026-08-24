@@ -1,6 +1,6 @@
 {
   "name": "@boyeep/nextjs-python-ai-chatbot-kit",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Next.js and Python streaming AI chatbot starter.",
   "type": "module",
   "bin": {

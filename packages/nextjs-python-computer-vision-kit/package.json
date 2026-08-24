@@ -1,6 +1,6 @@
 {
   "name": "@boyeep/nextjs-python-computer-vision-kit",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Next.js and Python computer vision starter with image and live-camera inference.",
   "type": "module",
   "bin": {

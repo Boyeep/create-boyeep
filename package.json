@@ -1,6 +1,6 @@
 {
   "name": "create-boyeep",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Scaffold production-minded full-stack and backend templates from Boyeep.",
   "type": "module",
   "bin": {

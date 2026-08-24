@@ -1,6 +1,6 @@
 {
   "name": "@boyeep/nextjs-python-ai-agent-kit",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Next.js and Python AI agent starter with tools, streaming, structured output, and jobs.",
   "type": "module",
   "bin": {

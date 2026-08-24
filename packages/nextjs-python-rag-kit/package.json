@@ -1,6 +1,6 @@
 {
   "name": "@boyeep/nextjs-python-rag-kit",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Next.js and Python RAG starter with ingestion, retrieval, citations, and chat.",
   "type": "module",
   "bin": {

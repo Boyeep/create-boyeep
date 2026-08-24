@@ -1,6 +1,6 @@
 {
   "name": "@boyeep/python-document-intelligence-kit",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Python document intelligence API starter.",
   "type": "module",
   "bin": {
