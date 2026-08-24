@@ -1,0 +1,52 @@
+{
+  "name": "create-boyeep-kit",
+  "version": "0.1.0",
+  "description": "Scaffold production-minded full-stack and backend templates from Boyeep.",
+  "type": "module",
+  "bin": {
+    "create-boyeep-kit": "./bin/create-boyeep-kit.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "check": "npm run lint && npm test && npm pack --dry-run",
+    "lint": "eslint .",
+    "test": "node --test"
+  },
+  "keywords": [
+    "create",
+    "scaffold",
+    "starter",
+    "nextjs",
+    "fastapi",
+    "golang",
+    "ai"
+  ],
+  "author": "Boyeep",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Boyeep/create-boyeep-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Boyeep/create-boyeep-kit/issues"
+  },
+  "homepage": "https://github.com/Boyeep/create-boyeep-kit#readme",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.1.0",
+    "kleur": "^4.1.5",
+    "tar": "^7.5.10"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
