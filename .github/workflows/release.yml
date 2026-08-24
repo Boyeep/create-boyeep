@@ -82,6 +82,7 @@ jobs:
           VERSION: ${{ inputs.version }}
         run: |
           npm config set @boyeep:registry https://npm.pkg.github.com
+          npm config set //npm.pkg.github.com/:_authToken "$NODE_AUTH_TOKEN"
           for package_path in packages/*; do
             package_name="$(node -p "require('./${package_path}/package.json').name")"
             if npm view "${package_name}@${VERSION}" version --registry https://npm.pkg.github.com >/dev/null 2>&1; then
