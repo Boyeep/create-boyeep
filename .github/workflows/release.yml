@@ -1,23 +1,116 @@
-name: Publish package
+name: Release npm packages
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Semver to publish, without a leading v
+        required: true
+        type: string
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
+  packages: write
+
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
     environment: npm
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
+          cache: npm
           registry-url: https://registry.npmjs.org
-      - run: npm ci
-      - run: npm run check
-      - run: npm publish --provenance --access public
+
+      - name: Prepare version
+        run: node scripts/set-release-version.mjs '${{ inputs.version }}'
+
+      - name: Install and verify
+        run: |
+          npm ci
+          npm run check
+
+      - name: Reject an existing release tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          if git ls-remote --exit-code --tags origin "refs/tags/v${VERSION}" >/dev/null 2>&1; then
+            echo "Release tag v${VERSION} already exists."
+            exit 1
+          fi
+
+      - name: Publish to npmjs
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          publish_npmjs() {
+            package_name="$1"
+            package_path="$2"
+            if npm view "${package_name}@${VERSION}" version --registry https://registry.npmjs.org >/dev/null 2>&1; then
+              echo "Skipping ${package_name}@${VERSION}; already on npmjs."
+            else
+              npm publish "$package_path" --registry https://registry.npmjs.org --access public --provenance
+            fi
+          }
+
+          publish_npmjs create-boyeep .
+          for package_path in packages/*; do
+            package_name="$(node -p "require('./${package_path}/package.json').name")"
+            publish_npmjs "$package_name" "$package_path"
+          done
+
+      - name: Publish mirrors to GitHub Packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          npm config set @boyeep:registry https://npm.pkg.github.com
+          for package_path in packages/*; do
+            package_name="$(node -p "require('./${package_path}/package.json').name")"
+            if npm view "${package_name}@${VERSION}" version --registry https://npm.pkg.github.com >/dev/null 2>&1; then
+              echo "Skipping ${package_name}@${VERSION}; already on GitHub Packages."
+            else
+              npm publish "$package_path" --registry https://npm.pkg.github.com --access public --provenance
+            fi
+          done
+
+      - name: Verify both registries
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          npm view "create-boyeep@${VERSION}" version --registry https://registry.npmjs.org
+          for package_path in packages/*; do
+            package_name="$(node -p "require('./${package_path}/package.json').name")"
+            npm view "${package_name}@${VERSION}" version --registry https://registry.npmjs.org
+            npm view "${package_name}@${VERSION}" version --registry https://npm.pkg.github.com
+          done
+
+      - name: Commit and tag release
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add package.json package-lock.json packages
+          git commit -m "chore(release): v${VERSION}"
+          git tag "v${VERSION}"
+          git push origin main "v${VERSION}"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ inputs.version }}
+        run: gh release create "v${VERSION}" --generate-notes --title "v${VERSION}"

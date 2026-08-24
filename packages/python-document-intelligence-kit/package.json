@@ -7,7 +7,8 @@
     "create-python-document-intelligence-kit": "bin/create.js"
   },
   "files": [
-    "bin"
+    "bin",
+    "README.md"
   ],
   "scripts": {
     "check": "npm pack --dry-run"
@@ -22,8 +23,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Boyeep/create-boyeep.git"
+    "url": "git+https://github.com/Boyeep/python-document-intelligence-kit.git"
   },
+  "bugs": {
+    "url": "https://github.com/Boyeep/python-document-intelligence-kit/issues"
+  },
+  "homepage": "https://github.com/Boyeep/python-document-intelligence-kit#readme",
   "engines": {
     "node": ">=20"
   },
@@ -34,4 +39,3 @@
     "access": "public"
   }
 }
-

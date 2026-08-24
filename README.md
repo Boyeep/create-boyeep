@@ -69,6 +69,18 @@ npm run check
 node ./bin/create-boyeep-kit.js demo --template rag --no-install
 ```
 
+## Releases
+
+The `Release npm packages` workflow publishes one coordinated version of the
+CLI and every focused package to npmjs, mirrors the scoped packages to GitHub
+Packages, commits the version bump, creates a `vX.Y.Z` tag, and creates a
+GitHub Release. Existing versions are detected and skipped, so an interrupted
+release can be rerun safely.
+
+Configure the repository's `npm` environment with an `NPM_TOKEN` secret that
+can publish `create-boyeep` and the `@boyeep` packages. Then run the workflow
+manually with a semver value without the leading `v`.
+
 ## License
 
 MIT
