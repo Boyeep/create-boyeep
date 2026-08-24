@@ -14,7 +14,12 @@ function valueAfter(flag) {
 }
 
 if (process.argv.includes("--help")) {
-  console.log("Usage: create-boyeep-kit [project-name] [--template agent|rag|documents|realtime|voice|worker] [--no-install]");
+  console.log("Usage: create-boyeep-kit [project-name] [--template <id>] [--no-install] [--list]");
+  process.exit(0);
+}
+
+if (process.argv.includes("--list")) {
+  for (const item of templates) console.log(`${item.id.padEnd(16)} ${item.name} — ${item.description}`);
   process.exit(0);
 }
 
@@ -28,13 +33,11 @@ console.log(kleur.cyan(`\nCreating ${template.name} in ${projectName}…`));
 const destination = await scaffold({ template, projectName });
 const shouldInstall = !process.argv.includes("--no-install") && await confirm({ message: "Install dependencies now?", default: true });
 if (shouldInstall) {
-  const commands = template.id === "documents" || template.id === "worker"
-    ? [["python", ["-m", "pip", "install", "-e", ".[dev]"], destination]]
-    : [["npm", ["install"], path.join(destination, "frontend")], ["python", ["-m", "pip", "install", "-e", ".[dev]"], path.join(destination, "backend")]];
-  for (const [command, args, cwd] of commands) {
+  for (const recipe of template.install) {
+    const cwd = path.resolve(destination, recipe.cwd);
     await new Promise((resolve, reject) => {
-      const child = spawn(command, args, { cwd, stdio: "inherit", shell: process.platform === "win32" });
-      child.on("exit", (code) => code === 0 ? resolve() : reject(new Error(`${command} dependency installation failed.`)));
+      const child = spawn(recipe.command, recipe.args, { cwd, stdio: "inherit", shell: process.platform === "win32" });
+      child.on("exit", (code) => code === 0 ? resolve() : reject(new Error(`${recipe.command} dependency installation failed.`)));
     });
   }
 }
