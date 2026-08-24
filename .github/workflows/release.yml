@@ -55,17 +55,22 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           VERSION: ${{ inputs.version }}
         run: |
+          if npm view "create-boyeep@${VERSION}" version --registry https://registry.npmjs.org >/dev/null 2>&1; then
+            echo "Skipping create-boyeep@${VERSION}; already on npmjs."
+          else
+            npm publish --registry https://registry.npmjs.org --access public --provenance
+          fi
+
           publish_npmjs() {
             package_name="$1"
             package_path="$2"
             if npm view "${package_name}@${VERSION}" version --registry https://registry.npmjs.org >/dev/null 2>&1; then
               echo "Skipping ${package_name}@${VERSION}; already on npmjs."
             else
-              (cd "$package_path" && npm publish --registry https://registry.npmjs.org --access public --provenance)
+              (cd "$package_path" && npm publish --registry https://registry.npmjs.org --access public)
             fi
           }
 
-          publish_npmjs create-boyeep .
           for package_path in packages/*; do
             package_name="$(node -p "require('./${package_path}/package.json').name")"
             publish_npmjs "$package_name" "$package_path"
@@ -82,7 +87,7 @@ jobs:
             if npm view "${package_name}@${VERSION}" version --registry https://npm.pkg.github.com >/dev/null 2>&1; then
               echo "Skipping ${package_name}@${VERSION}; already on GitHub Packages."
             else
-              (cd "$package_path" && npm publish --registry https://npm.pkg.github.com --access public --provenance)
+              (cd "$package_path" && npm publish --registry https://npm.pkg.github.com --access public)
             fi
           done
 
