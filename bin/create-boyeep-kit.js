@@ -14,7 +14,7 @@ function valueAfter(flag) {
 }
 
 if (process.argv.includes("--help")) {
-  console.log("Usage: create-boyeep-kit [project-name] [--template <id>] [--no-install] [--list]");
+  console.log("Usage: create-boyeep [project-name] [--template <id>] [--no-install] [--list]");
   process.exit(0);
 }
 

@@ -1,16 +1,16 @@
-# create-boyeep-kit
+# create-boyeep
 
 Create production-minded AI, realtime, and backend starters from the Boyeep
 template collection.
 
 ```bash
-npx create-boyeep-kit@latest
+npm create boyeep@latest
 ```
 
 Or skip prompts:
 
 ```bash
-npx create-boyeep-kit my-rag-app --template rag --no-install
+npm create boyeep@latest my-rag-app -- --template rag --no-install
 ```
 
 ## Templates
@@ -32,7 +32,7 @@ npx create-boyeep-kit my-rag-app --template rag --no-install
 List the current catalog at any time:
 
 ```bash
-npx create-boyeep-kit@latest --list
+npm create boyeep@latest -- --list
 ```
 
 The CLI downloads the selected repository's `main` snapshot from GitHub. It
