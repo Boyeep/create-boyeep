@@ -1,0 +1,37 @@
+{
+  "name": "@boyeep/nextjs-python-ai-chatbot-kit",
+  "version": "0.1.0",
+  "description": "Next.js and Python streaming AI chatbot starter.",
+  "type": "module",
+  "bin": {
+    "create-nextjs-python-ai-chatbot-kit": "bin/create.js"
+  },
+  "files": [
+    "bin"
+  ],
+  "scripts": {
+    "check": "npm pack --dry-run"
+  },
+  "keywords": [
+    "boyeep",
+    "starter",
+    "scaffold",
+    "template"
+  ],
+  "author": "Boyeep",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Boyeep/create-boyeep.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "create-boyeep": "^0.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
+

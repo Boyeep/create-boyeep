@@ -1,0 +1,37 @@
+{
+  "name": "@boyeep/next-bun-kit",
+  "version": "0.1.0",
+  "description": "Next.js and Bun application starter.",
+  "type": "module",
+  "bin": {
+    "create-next-bun-kit": "bin/create.js"
+  },
+  "files": [
+    "bin"
+  ],
+  "scripts": {
+    "check": "npm pack --dry-run"
+  },
+  "keywords": [
+    "boyeep",
+    "starter",
+    "scaffold",
+    "template"
+  ],
+  "author": "Boyeep",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Boyeep/create-boyeep.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "create-boyeep": "^0.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
+

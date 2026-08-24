@@ -1,6 +1,6 @@
 {
   "name": "create-boyeep",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Scaffold production-minded full-stack and backend templates from Boyeep.",
   "type": "module",
   "bin": {
@@ -10,6 +10,9 @@
     "bin",
     "src"
   ],
+  "exports": {
+    "./cli": "./src/cli.js"
+  },
   "scripts": {
     "check": "npm run lint && npm test && npm pack --dry-run",
     "lint": "eslint .",

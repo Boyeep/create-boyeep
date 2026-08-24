@@ -13,6 +13,25 @@ Or skip prompts:
 npm create boyeep@latest my-rag-app -- --template rag --no-install
 ```
 
+Each starter also has a focused package when you do not need the interactive
+catalog:
+
+```bash
+npx @boyeep/nextjs-python-ai-agent-kit my-agent
+npx @boyeep/nextjs-python-ai-chatbot-kit my-chatbot
+npx @boyeep/nextjs-python-rag-kit my-rag-app
+npx @boyeep/nextjs-python-computer-vision-kit my-vision-app
+npx @boyeep/nextjs-python-voice-assistant-kit my-voice-app
+npx @boyeep/nextjs-go-monorepo-kit my-go-app
+npx @boyeep/nextjs-go-realtime-kit my-realtime-app
+npx @boyeep/python-document-intelligence-kit my-document-api
+npx @boyeep/python-computer-vision-api-kit my-vision-api
+npx @boyeep/python-background-worker-kit my-worker-app
+npx @boyeep/next-bun-kit my-next-app
+```
+
+Append `--no-install` to scaffold without installing dependencies.
+
 ## Templates
 
 | ID | Stack | Included workflow |
