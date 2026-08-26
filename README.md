@@ -1,6 +1,6 @@
 # create-boyeep
 
-Create production-minded AI, realtime, and backend starters from the Boyeep
+Create production-minded AI, realtime, and fullstack starters from the Boyeep
 template collection.
 
 ```bash
